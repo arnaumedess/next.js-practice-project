@@ -13,24 +13,43 @@ interface Props {
   }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const pokemon = await getPokemonById(id);
+export async function generateStaticParams() {
+  const static151Pokemons = Array.from({ length: 151 }).map(
+    (_, i) => `${i + 1}`
+  );
 
-  return {
-    title: `#${id} - ${pokemon.name}`,
-    description: `${pokemon.name} page`,
-  };
+  return static151Pokemons.map((id) => ({
+    id: id,
+  }));
 }
+
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const { id } = await params;
+//   const pokemon = await getPokemonById(id);
+
+//   return {
+//     title: `#${id} - ${pokemon.name}`,
+//     description: `${pokemon.name} page`,
+//   };
+// }
+
 const getPokemonById = async (id: string, name?: string): Promise<Pokemon> => {
   try {
-    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+    const trimmedId = id.trim();
+    const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${trimmedId}`, {
       cache: "force-cache", //TODO: Cambiar esto
-    }).then((resp) => resp.json());
+    });
+
+    if (!resp.ok) {
+      // Si la API responde 404 o similar, saltar a notFound()
+      notFound();
+    }
+
+    const pokemon = await resp.json();
 
     console.log("Se cargo: ", name);
 
-    return pokemon;
+    return pokemon as Pokemon;
   } catch (error) {
     notFound();
   }
