@@ -4,25 +4,33 @@ import { IoBrowsersOutline, IoLogoReact } from "react-icons/io5";
 import { LuCalculator } from "react-icons/lu";
 import { MdCatchingPokemon } from "react-icons/md";
 import { SidebarMenuItems } from "./SidebarMenuItems";
+import { CiStar } from "react-icons/ci";
+
 
 const menuItems = [
   {
     path: "/dashboard/main",
-    icon: <IoBrowsersOutline size={40} />,
+    icon: <IoBrowsersOutline size={40} className="text-amber-700"/>,
     title: "Dashboard",
     subtitle: "Visualizacion",
   },
   {
     path: "/dashboard/counter",
-    icon: <LuCalculator  size={40} />,
+    icon: <LuCalculator  size={40} className="text-gray-500"/>,
     title: "Counter",
     subtitle: "Contador",
   },
   {
     path: "/dashboard/pokemons",
-    icon: <MdCatchingPokemon  size={40} />,
+    icon: <MdCatchingPokemon  size={40} className="text-red-400" />,
     title: "Pokemons",
     subtitle: "Lista de Pokemons",
+  },
+  {
+    path: "/dashboard/favorites",
+    icon: <CiStar  size={40} className="text-amber-300" />,
+    title: "Favorites",
+    subtitle: "Lista de Pokemons favoritos",
   },
 ];
 

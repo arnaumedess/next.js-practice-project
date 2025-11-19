@@ -14,6 +14,7 @@ interface Props {
   }>;
 }
 
+
 export async function generateStaticParams() {
   const static151Pokemons = Array.from({ length: 151 }).map(
     (_, i) => `${i + 1}`
