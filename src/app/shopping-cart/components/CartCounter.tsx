@@ -1,27 +1,31 @@
 'use client';
 
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/store";
+import { addOne, substractOne } from "@/app/store/counter/CounterSlice";
 
 interface Props {
   value?: number;
 }
 
 export const CartCounter = ({ value = 10}: Props) => {
-  const [contador, setContador] = useState(value);
+  const count: number = useAppSelector(state => state.counter.count);
+  const dispatch = useAppDispatch();
+
   return (
     <>
-      <span className="text-9xl">{contador}</span>
+      <span className="text-9xl">{count}</span>
 
       <div className="flex">
         <button
           className="flex items-center justify-center p-2 rounded-xl bg-gray-900 text-white hover:bg-gray-600 transition-all w-[75px] mr-2"
-          onClick={() => setContador(contador + 1)}
+          onClick={() => dispatch( addOne())}
         >
           +1
         </button>
         <button
           className="flex items-center justify-center p-2 rounded-xl bg-gray-900 text-white hover:bg-gray-600 transition-all w-[75px] mr-2"
-          onClick={() => setContador(contador - 1)}
+          onClick={() => dispatch( substractOne())}
         >
           -1
         </button>
