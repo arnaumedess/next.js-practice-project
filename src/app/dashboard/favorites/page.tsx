@@ -1,6 +1,7 @@
-import { PokemonResponse, SinglePokemon, PokemonsGrid } from "@/app/dashboard/pokemons";
+import { PokemonResponse, SinglePokemon, PokemonsGrid, FavouritePokemons } from "@/app/dashboard/pokemons";
 import Image from "next/image";
 import { title } from "process";
+import { IoHeartOutline } from 'react-icons/io5';
 
 export const metadata = {
     title: 'Favoritos',
@@ -33,7 +34,8 @@ export default async function PokemonsPage() {
   return (
     <div className="flex flex-col">
       <span className="text-5xl my-3"> Lista de Pokemons <span className="text-red-500">Favoritos</span></span>
-      <PokemonsGrid pokemon={[]} />
+      <FavouritePokemons />
     </div>
   );
 }
+

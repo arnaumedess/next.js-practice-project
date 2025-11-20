@@ -1,7 +1,16 @@
+'use client'
+
 import Link from "next/link";
 import Image from "next/image";
 import { SinglePokemon } from "../interface/single-pokemon";
-import { IoAccessibility, IoAccessibilityOutline, IoHeartOutline } from "react-icons/io5";
+import {
+  IoAccessibility,
+  IoAccessibilityOutline,
+  IoHeart,
+  IoHeartOutline,
+} from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "@/app/store";
+import { toogleFavourite } from "@/app/store/pokemons/pokemon";
 
 interface Props {
   pokemon: SinglePokemon;
@@ -9,6 +18,14 @@ interface Props {
 
 export const PokemonsCard = ({ pokemon }: Props) => {
   const { id, name } = pokemon;
+
+  const isFavourite = useAppSelector((state) => state.pokemons[id]);
+  console.log(isFavourite);
+  const dispatch = useAppDispatch();
+
+  const onToogle = () => (
+    dispatch( toogleFavourite(pokemon) )
+  )
 
   return (
     <div className="mx-auto right-0 mt-2 w-60">
@@ -34,24 +51,30 @@ export const PokemonsCard = ({ pokemon }: Props) => {
           </div>
         </div>
         <div className="border-b">
-          <Link
-            href="/dashboard/main"
+          <div
+            onClick={ onToogle }
             className="px-4 py-2 hover:bg-gray-100 flex"
           >
+            
             <div className="text-red-600">
-              <IoHeartOutline />
+              {
+                isFavourite 
+                ? <IoHeart /> 
+                : <IoHeartOutline/>
+              }
             </div>
             <div className="pl-3">
               <p className="text-sm font-medium text-gray-800 leading-none">
-                Not favourite
+                {
+                isFavourite 
+                ? `Favorito`
+                : `Marcalo en favoritos`
+              }
               </p>
-              <p className="text-xs text-gray-500">View your campaigns</p>
+              <p className="text-xs text-gray-500">Click for adding into favourites</p>
             </div>
-          </Link>
-          
+          </div>
         </div>
-
-    
       </div>
     </div>
   );
